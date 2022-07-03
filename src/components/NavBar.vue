@@ -6,37 +6,42 @@ import { BellIcon, MenuIcon, XIcon, SearchIcon, HomeIcon, HandIcon, LightBulbIco
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 
 import { ref } from 'vue'
+import axios from 'axios'
 
 const navigation = [
-  { name: 'Home', href: '#home', current: true, icon: 'HomeIcon' },
-  { name: 'Me', href: '#me', current: false },
-  { name: 'Projects', href: '#projects', current: false },
+  { name: 'Home', href: '#', current: true, icon: 'HomeIcon' },
+  { name: 'Me', href: '#', current: false },
+  { name: 'Projects', href: '/projects', current: false },
   { name: 'Calendar', href: '#', current: false },
 ]
 
+const name= "NavBar" 
 const active = ref(0);
-
-
 </script>
 
 <template>
   <Disclosure as="nav" class="fixed mt-0 w-full z-10 top-0 bg-gray-800 border-solid border-b-4 border-yellow-600">
-    <div class="relative max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-      <div class=" flex items-center justify-between h-16">
+    <div class="relative max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-12">
+      <div class=" flex items-center justify-between ">
        
         <div class=" h-full flex-1 flex items-center sm:items-stretch sm:justify-start">
           <div class="flex-shrink-0 flex items-center">
-            <h1 class=" text-2xl font-bold leading-7 text-white sm:text-3xl sm:truncate">{GaboDev}</h1>
+            <router-link to="/" class="navbar-item">
+            <h1 class="pt-2 text-2xl font-bold leading-7 text-white sm:text-3xl sm:truncate">{GaboDev}</h1>               
+            </router-link>
           </div>
           
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 static inset-auto sm:ml-6 sm:pr-0">
           <div class="h-full sm:block sm:ml-6">
             <div class="h-full flex space-x-0">
-
+              
               <a @click="active = 1" :href="navigation[0].href" :class="[active === 1 ? 'border-solid border-x-4  border-yellow-600 bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'px-3 py-2 rounded-sm text-sm font-medium']" :aria-current="active === 1 ? 'page' : undefined"> 
+                <router-link to="/" class="navbar-item"> 
                 <HomeIcon class="block h-full w-6" aria-hidden="true"/>
+                </router-link>
               </a>
+              
 
               <a @click="active = 2" :href="navigation[1].href" :class="[active === 2 ? 'border-solid border-x-4  border-yellow-600 bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'px-3 py-2 rounded-sm text-sm font-medium']" :aria-current="active === 2 ? 'page' : undefined"> 
                 <HandIcon class="block h-full w-6" aria-hidden="true"/>

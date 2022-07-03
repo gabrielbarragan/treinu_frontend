@@ -1,11 +1,18 @@
 <script setup>
 
 </script>
-
+<script>
+export default {
+  
+  setup() {
+    
+  },
+}
+</script>
 <template>
-  <footer class=" fixed b-0 w-full text-center bg-gray-900  bottom-0 text-white border-solid border-t-4 border-yellow-600">
-  <div class="container-fluid px-6 py-2">
-    <div class="flex justify-center my-2 ">
+  <footer class="fixed inset-x-0 bottom-0 w-full text-center bg-gray-900  bottom-0 text-white border-solid border-t-4 border-yellow-600 ">
+  <div class="container-fluid px-6 py-1 ">
+    <div class="flex justify-center my-1 ">
       <a href="#!" type="button" class="rounded-full border-2 border-blue-800 text-blue-800 leading-normal uppercase hover:bg-blue-800 hover:border-white hover:text-white focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-10 h-10 m-1">
         <svg aria-hidden="true"
         focusable="false"

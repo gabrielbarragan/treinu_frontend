@@ -1,6 +1,8 @@
+
+
 <template>
-      <section class="relative flex w-full h-full ">
-        <div
+      <section class="relative flex w-screen h-full ">
+<div
           class="relative py-4 w-full  bg-gray-900"
           style="background-size: 100%; background-repeat: no-repeat;"
           
@@ -14,7 +16,7 @@
                 <div class="rounded-t mb-0 px-6 py-6">
                   <div class="text-center mb-3">
                     <h6 class="text-gray-600 text-sm font-bold">
-                      Sign in with
+                      Sign up with
                     </h6>
                   </div>
                   <div class="btn-wrapper text-center">
@@ -42,23 +44,45 @@
                   </div>
                   <hr class="mt-6 border-b-1 border-gray-400" />
                 </div>
-                <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                <div class="flex-auto px-4 lg:px-10 py-6 pt-0">
                   <div class="text-gray-500 text-center mb-3 font-bold">
-                    <small>Or sign in with credentials</small>
+                    <small>Or enter your information</small>
                   </div>
-                  <form @submit.prevent="submitForm">
+                  <form>
                     <div class="relative w-full mb-3">
                       <label
                         class="block uppercase text-gray-700 text-xs font-bold mb-2"
                         for="grid-password"
                         >Email</label
                       ><input
-                        type="text"
+                        type="email"
                         class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
-                        placeholder="username"
+                        placeholder="Enter email"
                         style="transition: all 0.15s ease 0s;"
-                        id="username"
-                        v-model="username"
+                      />
+                    </div>
+                    <div class="relative w-full mb-3">
+                      <label
+                        class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                        for="grid-password"
+                        >Enter fullname</label
+                      ><input
+                        type="fullname"
+                        class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                        placeholder="Enter fullame"
+                        style="transition: all 0.15s ease 0s;"
+                      />
+                    </div>
+                    <div class="relative w-full mb-3">
+                      <label
+                        class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                        for="grid-password"
+                        >Enter username</label
+                      ><input
+                        type="name"
+                        class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                        placeholder="Enter username"
+                        style="transition: all 0.15s ease 0s;"
                       />
                     </div>
                     <div class="relative w-full mb-3">
@@ -71,10 +95,9 @@
                         class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Password"
                         style="transition: all 0.15s ease 0s;"
-                        id="password"
-                        v-model="password"
                       />
                     </div>
+
                     <div>
                       <label class="inline-flex items-center cursor-pointer"
                         ><input
@@ -87,13 +110,10 @@
                         ></label
                       >
                     </div>
-                    <div class="bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-red-700 mb-3" role="alert" v-if="errors.length">
-                      <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-                    </div>
                     <div class="text-center mt-6">
                       <button
                         class="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-                        type="submit"
+                        type="button"
                         style="transition: all 0.15s ease 0s;"
                       >
                         Sign In
@@ -101,24 +121,18 @@
                     </div>
                   </form>
                 </div>
-                <div class="flex flex-wrap my-4 mx-8">
-                  <div class="w-1/2">
-                    <a href="#pablo" class="text-gray-900"
-                    ><small>Forgot password?</small></a
-                  >
+                <div class="flex flex-wrap my-4 mx-8 text-center">
+                  <div class="w-full">
+                    <a href="#" class="text-gray-900"
+                    ><router-link to="/Login"><small>Already have an account?</small></router-link>
+                    </a>
                   </div>
-                  <div class="w-1/2 text-right">
-                    <a href="" class="text-gray-900"
-                    ><router-link to="/signup"><small>Create new account</small></router-link></a
-                  >
-                  </div>
+                 
                 </div>
               </div>
-              
+
             </div>
-              
-            </div>
-            
+          </div>
           </div>
         </div>
       </section>
@@ -126,77 +140,18 @@
 </template>
 
 <script>
-import NavBar from "../components/NavBar.vue";
-import FooterBar from "../components/FooterBar.vue";
-import axios from 'axios';
 
 export default {
-  name: "Login",
-    
-  data(){
-        return{
-            username:'',
-            password:'',
-            errors:[],
-        }
-    },
+  name: "Signup",
   components: {
-    NavBar,
-    FooterBar
+  
   },
   mounted(){
-        document.title = 'Login | Treinu'
+        document.title = 'Signup | Treinu'
     },
-  methods:{
-    
-    async submitForm(){
-
-      var formData = new FormData();
-      
-      formData.append('username', this.username)
-      formData.append('password', this.password)
-
-      
-      
-      axios.defaults.headers.common["Authorization"] = ""
-      axios.defaults.headers.post['Content-Type'] = 'application/form-data';
-      localStorage.removeItem("token")
-      await axios
-                .post("api/v1/users/token", formData)
-                .then(response => {
-                                    
-                  const token = response.data.access_token
-                  this.$store.commit('setToken',token)
-
-                  axios.defaults.headers.common["Authorization"] = "Token " + token
-
-                  localStorage.setItem("token", token)
-                  
-                  const toPath = this.$route.query.to || '/myaccount'
-                  
-                  this.$router.push(toPath)
-                    
-                })
-                .catch(error => {
-                  
-                    if(error.response){
-                      this.errors = []
-                        for(const property in error.response.data){                            
-                            try{
-                              this.errors.push(`${error.response.data[property][0]['loc'][1]} ${error.response.data[property][0]['msg']}`)
-                              } catch(mid_error){
-                                this.errors.push(error.response.data[property])
-                              }
-                            
-                        }
-                    }else{
-                        this.errors.push('Algo va mal con el login, Por favor intenta de nuevo')
-
-                        console.log(JSON.stringify(error))
-                    }
-                })
-    }
-  },
-
 }
 </script>
+
+<style scoped>
+
+</style>
