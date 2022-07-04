@@ -5,6 +5,23 @@
 import NavBar  from './components/NavBar.vue'
 import  FooterBar  from './components/FooterBar.vue'
 import { ref } from 'vue'
+import axios from 'axios';
+import { useStore } from 'vuex'
+
+function beforeCreate(){
+  const store = useStore()
+  store.commit('initializeStore')
+
+  const token = store.state.token
+
+  if (token){
+    axios.defaults.headers.common['Authorization'] = "Bearer " + token
+
+  }else{
+    axios.defaults.headers.common['Authorization'] = ""
+  }
+}
+beforeCreate();
 
 
 </script>
@@ -16,8 +33,7 @@ import { ref } from 'vue'
   
   
   <main 
-    class="flex bg-gray-300  pt-12 pb-16"
-    style="background-size: 100%; background-repeat: no-repeat;">
+    class="bg-gray-300  pt-12 pb-16 content-center justify-center">
     <router-view> </router-view>
     
   </main>

@@ -1,162 +1,99 @@
 <template>
-  <div>
-    <NavBar/>
-    <main class="profile-page">
-      <section class="relative block" style="height: 500px;">
-        <div
-          class="absolute top-0 w-full h-full bg-center bg-cover"
-          style='background-image: url("https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80");'
-        >
-          <span
-            id="blackOverlay"
-            class="w-full h-full absolute opacity-50 bg-black"
-          ></span>
+      <section class="w-full bg-white px-4 pb-2 pt-4">
+        <div class="grid grid-rows-3 grid-cols-5 grid-flow-col gap-0">
+          <div class="row-span-3 col-span-2 px-4 py-4">
+            <img src="src/assets/img/profile.jpg" class="w-24 h-24 border-4 rounded-full border-yellow-800 " alt="profile">
+          </div>
+          <div class="col-span-3"><h4 class="font-small text-center pb-1 leading-tight text-3xl">{{(user.username)}}</h4></div>
+          <div class="row-span-2 col-span-3">
+            <button type="button" class="w-full px-6 py-2 border-x-2 border-t-2 border-b-4 border-yellow-800 text-yellow-600 font-medium text-sm  leading-tight uppercase rounded hover:bg-yellow-600 hover:text-white  focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+              Edita tu perfil
+            </button>
+          </div>
         </div>
-        <div
-          class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
-          style="height: 70px;"
-        >
-          <svg
-            class="absolute bottom-0 overflow-hidden"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            version="1.1"
-            viewBox="0 0 2560 100"
-            x="0"
-            y="0"
-          >
-            <polygon
-              class="text-gray-300 fill-current"
-              points="2560 0 2560 100 0 100"
-            ></polygon>
-          </svg>
-        </div>
+        
       </section>
-      <section class="relative py-16 bg-gray-300">
-        <div class="container mx-auto px-4">
-          <div
-            class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64"
-          >
-            <div class="px-6">
-              <div class="flex flex-wrap justify-center">
-                <div
-                  class="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center"
-                >
-                  <div class="relative">
-                    <img
-                      alt="..."
-                      src="../assets/img/team-2-800x800.jpg"
-                      class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16"
-                      style="max-width: 150px;"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center"
-                >
-                  <div class="py-6 px-3 mt-32 sm:mt-0">
-                    <button
-                      class="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1"
-                      type="button"
-                      style="transition: all 0.15s ease 0s;"
-                    >
-                      Connect
-                    </button>
-                  </div>
-                </div>
-                <div class="w-full lg:w-4/12 px-4 lg:order-1">
-                  <div class="flex justify-center py-4 lg:pt-4 pt-8">
-                    <div class="mr-4 p-3 text-center">
-                      <span
-                        class="text-xl font-bold block uppercase tracking-wide text-gray-700"
-                        >22</span
-                      ><span class="text-sm text-gray-500">Friends</span>
-                    </div>
-                    <div class="mr-4 p-3 text-center">
-                      <span
-                        class="text-xl font-bold block uppercase tracking-wide text-gray-700"
-                        >10</span
-                      ><span class="text-sm text-gray-500">Photos</span>
-                    </div>
-                    <div class="lg:mr-4 p-3 text-center">
-                      <span
-                        class="text-xl font-bold block uppercase tracking-wide text-gray-700"
-                        >89</span
-                      ><span class="text-sm text-gray-500">Comments</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="text-center mt-12">
-                <h3
-                  class="text-4xl font-semibold leading-normal mb-2 text-gray-800 mb-2"
-                >
-                  Jenna Stones
-                </h3>
-                <div
-                  class="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase"
-                >
-                  <i
-                    class="fas fa-map-marker-alt mr-2 text-lg text-gray-500"
-                  ></i>
-                  Los Angeles, California
-                </div>
-                <div class="mb-2 text-gray-700 mt-10">
-                  <i class="fas fa-briefcase mr-2 text-lg text-gray-500"></i
-                  >Solution Manager - Creative Tim Officer
-                </div>
-                <div class="mb-2 text-gray-700">
-                  <i class="fas fa-university mr-2 text-lg text-gray-500"></i
-                  >University of Computer Science
-                </div>
-              </div>
-              <div class="mt-10 py-10 border-t border-gray-300 text-center">
-                <div class="flex flex-wrap justify-center">
-                  <div class="w-full lg:w-9/12 px-4">
-                    <p class="mb-4 text-lg leading-relaxed text-gray-800">
-                      An artist of considerable range, Jenna the name taken by
-                      Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                      performs and records all of his own music, giving it a
-                      warm, intimate feel with a solid groove structure. An
-                      artist of considerable range.
-                    </p>
-                    <div class="column is-12">
-                      <button @click="logout()" class="button is-danger">Logout</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <section class="w-full bg-white px-4 pb-2">
+        <div class="grid grid-rows-2 grid-cols-5 grid-flow-col gap-0">
+          <div class="row-span-1 px-4 col-span-5">
+            <h4 class="font-medium leading-tight text-2xl">{{userFake.name}}</h4>
+          </div>
+          <div class="row-span-1 px-4  col-span-5">
+             <h5 class="font-small leading-tight text-sm">{{userFake.user_description}}</h5>
           </div>
         </div>
       </section>
-    </main>
-    <FooterBar/>
-  </div>
+      <section class="w-full bg-white px-2 py-2  text-center outline outline-1 outline-yellow-600 ">
+        <div class="grid grid-rows-1 grid-cols-3 grid-flow-col gap-0">
+          <div class="row-span-1 px-4 col-span-1">
+             <h5 class="font-medium leading-tight text-sm">{{userFake.followers}} </h5>
+             <small class="text-xs">Followers</small>
+          </div>
+          <div class="row-span-1 px-4  col-span-1">
+             <h5 class="font-medium leading-tight text-sm">{{userFake.follows}} </h5>
+             <small class="text-xs">Following</small>
+          </div>
+          <div class="row-span-1 px-4  col-span-1">
+             <h5 class="font-medium leading-tight text-sm">{{userFake.posts}} </h5>
+             <small class="text-xs">Posts</small> 
+          </div>
+        </div>
+      </section>
+      <section class="w-full bg-white py-2">
+        <div class="grid grid-cols-3 grid-flow-col gap-1 items-center">
+          <div class="row-span-1 col-span-1 content-center w-">
+            <img src="src/assets/img/profile.jpg" class="" alt="profile">
+          </div>
+          <div class="row-span-1 col-span-1 content-center">
+             <img src="src/assets/img/profile.jpg" class="" alt="profile">
+          </div>
+          <div class="row-span-1 col-span-1 content-center">
+             <img src="src/assets/img/profile.jpg" class="" alt="profile">
+          </div>
+        </div>
+      </section>
+      
 </template>
 <script>
-import NavBar from "../components/NavBar.vue";
-import FooterBar from "../components/FooterBar.vue";
+
 import axios from 'axios'
 export default {
   name: "AccountPage",
-  components: {
-    NavBar,
-    FooterBar
+  data(){
+    return {
+        user: {},
+        userFake:{
+          name:"Gabriel Rondón",
+          followers:230,
+          follows: 100,
+          posts:10,
+          user_description: "this is a user description for an app treinu"
+        }
+        
+    }
   },
+
   mounted(){
         document.title = 'Me | Profile | Treinu'
+        this.getUser();
     },
   methods:{
-        logout(){
-            axios.defaults.headers.common["Authorization"] = ""
+        
+        async getUser(){
+          const token = this.$store.state.token
+          
+          if (token){
+            axios.defaults.headers.common['Authorization'] = "Bearer " + token
 
-            localStorage.removeItem("token")
-            localStorage.removeItem("username")
-            localStorage.removeItem("userid")
-
-            this.$store.commit('removeToken')
-            this.$router.push('/')
+          }else{
+            axios.defaults.headers.common['Authorization'] = ""
+          }          
+          await axios
+            .get(`/api/v1/users/me/`)
+            .then(response => {
+              this.user = response.data
+              document.title= this.user.username + ' | Treinu '
+            })
         }
     }
 }

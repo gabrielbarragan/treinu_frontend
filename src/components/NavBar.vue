@@ -7,16 +7,34 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 
 import { ref } from 'vue'
 import axios from 'axios'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 const navigation = [
   { name: 'Home', href: '#', current: true, icon: 'HomeIcon' },
   { name: 'Me', href: '#', current: false },
   { name: 'Projects', href: '/projects', current: false },
   { name: 'Calendar', href: '#', current: false },
+  
 ]
 
 const name= "NavBar" 
 const active = ref(0);
+
+const store = useStore()
+const router = useRouter()
+
+function logout(){
+            axios.defaults.headers.common["Authorization"] = ""
+
+            localStorage.removeItem("token")
+            localStorage.removeItem("username")
+            localStorage.removeItem("userid")
+
+            store.commit('removeToken')
+            router.push('/')
+        }
+
 </script>
 
 <template>
@@ -67,15 +85,23 @@ const active = ref(0);
               </MenuButton>
             </div>
             <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-              <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-gray-800 border-solid border-x-4 border-b-4 border-yellow-600 ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-gray-800 border-solid border-x-4 border-b-4 border-yellow-600 ring-1 ring-black ring-opacity-5 focus:outline-none" v-if="store.state.isAuthenticated">
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-900' : '', 'block px-4 py-2 text-sm text-white']">Your Profile</a>
+                  <router-link to="/myaccount"><a href="#" :class="[active ? 'bg-gray-900' : '', 'block px-4 py-2 text-sm text-white']">Your Profile</a></router-link>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
                   <a href="#" :class="[active ? 'bg-gray-900' : '', 'block px-4 py-2 text-sm text-white']">Settings</a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-900' : '', 'block px-4 py-2 text-sm text-white']">Sign out</a>
+                  <a href="#" @click="logout()" :class="[active ? 'bg-gray-900' : '', 'block px-4 py-2 text-sm text-white']" >Sign out</a>
+                </MenuItem>
+              </MenuItems>
+                <MenuItems v-else class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-gray-800 border-solid border-x-4 border-b-4 border-yellow-600 ring-1 ring-black ring-opacity-5 focus:outline-none" >
+                  <MenuItem v-slot="{ active }">
+                    <router-link to="/signup"><a href="#" :class="[active ? 'bg-gray-900' : '', 'block px-4 py-2 text-sm text-white']" >Sign up</a></router-link>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                    <router-link to="/login"><a href="#" :class="[active ? 'bg-gray-900' : '', 'block px-4 py-2 text-sm text-white']" >Login</a></router-link>
                 </MenuItem>
               </MenuItems>
             </transition>
