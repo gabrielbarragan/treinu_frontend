@@ -2,10 +2,8 @@
 
 <template>
       <section class="relative flex w-screen h-full ">
-<div
-          class="relative py-4 w-full  bg-gray-900"
+        <div class="relative py-4 w-full  bg-gray-900"
           style="background-size: 100%; background-repeat: no-repeat;"
-          
         >
           <div class="container mx-auto px-4 ">
             <div class="flex content-center items-center justify-center h-full">
@@ -48,7 +46,7 @@
                   <div class="text-gray-500 text-center mb-3 font-bold">
                     <small>Or enter your information</small>
                   </div>
-                  <form>
+                  <form @submit.prevent="submitForm">
                     <div class="relative w-full mb-3">
                       <label
                         class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -59,6 +57,7 @@
                         class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Enter email"
                         style="transition: all 0.15s ease 0s;"
+                        v-model="email"
                       />
                     </div>
                     <div class="relative w-full mb-3">
@@ -71,6 +70,7 @@
                         class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Enter fullame"
                         style="transition: all 0.15s ease 0s;"
+                        v-model="fullname"
                       />
                     </div>
                     <div class="relative w-full mb-3">
@@ -83,6 +83,7 @@
                         class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Enter username"
                         style="transition: all 0.15s ease 0s;"
+                        v-model="username"
                       />
                     </div>
                     <div class="relative w-full mb-3">
@@ -95,6 +96,20 @@
                         class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                         placeholder="Password"
                         style="transition: all 0.15s ease 0s;"
+                        v-model="password"
+                      />
+                    </div>
+                    <div class="relative w-full mb-3">
+                      <label
+                        class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                        for="grid-password"
+                        >Confirm Password</label
+                      ><input
+                        type="password"
+                        class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                        placeholder="Password"
+                        style="transition: all 0.15s ease 0s;"
+                        v-model="confirmPassword"
                       />
                     </div>
 
@@ -110,13 +125,19 @@
                         ></label
                       >
                     </div>
+                    <div class="bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-red-700 mb-3" role="alert" v-if="errors.length">
+                      <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                    </div>
+                    <div class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 mb-3" role="alert" v-if="success.length">
+                      <p v-for="succ in success" v-bind:key="succ">{{ succ }}</p>
+                    </div>
                     <div class="text-center mt-6">
                       <button
                         class="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-                        type="button"
+                        type="submit"
                         style="transition: all 0.15s ease 0s;"
                       >
-                        Sign In
+                        Sign Up
                       </button>
                     </div>
                   </form>
@@ -140,15 +161,89 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: "Signup",
+   data(){
+        return {
+                fullname: '',
+                username: '',
+                email: '',
+                password: '',
+                confirmPassword:'',
+                errors:[],  
+                success:[],            
+            }
+    },
   components: {
   
   },
   mounted(){
         document.title = 'Signup | Treinu'
     },
+
+  methods:{
+    async submitForm(){
+      this.errors = []
+      this.success = []
+
+        if(this.username==''){
+          this.errors.push('Debes escribir un nombre de usuario')
+        }
+        if(this.password ==''|| this.password.length < 6){
+          if (this.password==''){
+            this.errors.push('El password está vácio')
+          }
+          else{
+            this.errors.push('El password es muy corto')
+          }
+        }
+        if(this.password != this.confirmPassword){
+          this.errors.push('El password y la confirmación no coinciden')
+        }
+      if (!this.errors.length){
+        var formData = new FormData();
+
+        formData = {
+          'username': this.username,
+          'email': this.email,
+          'password':this.password,
+          'confirmation_password': this.confirmPassword,
+          'active': true
+        }
+
+        console.log(this.username)
+
+        console.log(formData)
+        axios.defaults.headers.post['Content-Type'] = 'application/form-data';
+        await axios
+              .post("api/v1/users/", formData)
+              .then(response => {
+                console.log(response)
+                  this.success.push("Usuario creado exitosamente") //enviar un correo
+                  const toPath = this.$route.query.to || '/login'
+                  
+                  this.$router.push(toPath)
+              })
+              .catch(error=> {
+                  if (error.response){
+                      for(const property in error.respose){
+                          this.errors.push(`${property}: ${error.response.data.detail}`)
+                      }
+
+                      this.errors.push(JSON.stringify(error.response.data.detail))
+
+                  }else if(error.message){
+                      this.errors.push('Algo va mal, intenta nuevamente.')
+                      console.log(JSON.stringify(error))
+                  }
+              })
+          
+      }
+    }
+    }
+
 }
 </script>
 
