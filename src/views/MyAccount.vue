@@ -2,7 +2,7 @@
       <section class="w-full bg-white px-4 pb-2 pt-4">
         <div class="grid grid-rows-3 grid-cols-5 grid-flow-col gap-0">
           <div class="row-span-3 col-span-2 px-4 py-4">
-            <img src="src/assets/img/profile.jpg" class="w-24 h-24 border-4 rounded-full border-yellow-800 " alt="profile">
+            <img :src="user.profile_pic" class="w-24 h-24 border-4 rounded-full border-yellow-800 " alt="profile">
           </div>
           <div class="col-span-3"><h4 class="font-small text-center pb-1 leading-tight text-3xl">{{(user.username)}}</h4></div>
           <div class="row-span-2 col-span-3">
@@ -16,7 +16,7 @@
       <section class="w-full bg-white px-4 pb-2">
         <div class="grid grid-rows-2 grid-cols-5 grid-flow-col gap-0">
           <div class="row-span-1 px-4 col-span-5">
-            <h4 class="font-medium leading-tight text-2xl">{{userFake.name}}</h4>
+            <h4 class="font-medium leading-tight text-2xl">{{user.username}}</h4>
           </div>
           <div class="row-span-1 px-4  col-span-5">
              <h5 class="font-small leading-tight text-sm">{{userFake.user_description}}</h5>
@@ -93,7 +93,9 @@ export default {
             .then(response => {
               this.user = response.data
               document.title= this.user.username + ' | Treinu '
+              console.log(this.user.profile_pic)
             })
+            
         }
     }
 }
